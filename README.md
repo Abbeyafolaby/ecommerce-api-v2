@@ -67,7 +67,7 @@ Set up a Postman Environment and a Collection to exercise the auth routes.
     - Headers: `Content-Type: application/json`
     - Body (raw JSON):
 
-      ```
+      ```json
       {
       "name": "John Doe",
       "email": "john@example.com",
@@ -82,7 +82,7 @@ Set up a Postman Environment and a Collection to exercise the auth routes.
     - URL: `{{baseUrl}}/api/{{apiVersion}}/auth/login`
     - Headers: `Content-Type: application/json`
     - Body (raw JSON):
-      ```
+      ```json
       {
       "email": "john@example.com",
       "password": "Passw0rd!"
@@ -104,6 +104,50 @@ Set up a Postman Environment and a Collection to exercise the auth routes.
   - Signup: 201 `{ user, token }`
   - Login: 200 `{ user, token }`
   - Me: 200 `{ user }`
+
+### Products Collection
+
+Add these requests to the same Collection to test the Products CRUD. Admin-only requests require `Authorization: Bearer {{token}}` — obtain `{{token}}` by logging in as an admin user.
+
+- List products
+  - Method: GET
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/products`
+
+- Get product by id
+  - Method: GET
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/products/:id`
+  - Replace `:id` with a valid product id.
+
+- Create product (admin only)
+  - Method: POST
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/products`
+  - Headers: `Content-Type: application/json`, `Authorization: Bearer {{token}}`
+  - Body (raw JSON):
+    ```json
+    {
+      "name": "Sample Product",
+      "price": 49.99,
+      "description": "A great product",
+      "category": "gadgets",
+      "stock": 25,
+      "images": ["https://example.com/image.jpg"],
+      "isActive": true
+    }
+    ```
+  - Expected: 201 `{ product }`
+
+- Update product (admin only)
+  - Method: PATCH
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/products/:id`
+  - Headers: `Content-Type: application/json`, `Authorization: Bearer {{token}}`
+  - Body (raw JSON): include only fields to change, e.g. `{ "price": 59.99, "stock": 30 }`
+  - Expected: 200 `{ product }`
+
+- Delete product (admin only)
+  - Method: DELETE
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/products/:id`
+  - Headers: `Authorization: Bearer {{token}}`
+  - Expected: 204 No Content
 
 ### Common issues
 
