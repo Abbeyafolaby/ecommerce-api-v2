@@ -149,6 +149,37 @@ Add these requests to the same Collection to test the Products CRUD. Admin-only 
   - Headers: `Authorization: Bearer {{token}}`
   - Expected: 204 No Content
 
+### Cart Collection
+
+These routes require authentication. Ensure `{{token}}` is set by logging in.
+
+- View cart
+  - Method: GET
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/cart`
+  - Headers: `Authorization: Bearer {{token}}`
+  - Expected: 200 `{ cart }` (cart may be empty)
+
+- Add to cart
+  - Method: POST
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/cart/add`
+  - Headers: `Content-Type: application/json`, `Authorization: Bearer {{token}}`
+  - Body (raw JSON):
+    ```json
+    {
+      "productId": "<product_id>",
+      "quantity": 2
+    }
+    ```
+  - Notes: Quantity defaults to 1; cannot exceed product stock.
+  - Expected: 200 `{ cart }` with populated `items.product`
+
+- Remove from cart
+  - Method: DELETE
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/cart/remove/:id`
+  - Headers: `Authorization: Bearer {{token}}`
+  - Replace `:id` with the product id to remove from the cart.
+  - Expected: 204 No Content
+
 ### Common issues
 
 - Ensure your `.env` has a valid Mongo connection string:
