@@ -17,11 +17,13 @@ A robust and scalable e-commerce backend API that provides complete functionalit
 ## Installation & Usage
 
 ### Prerequisites
+
 - Node.js (v16 or higher)
 - npm or yarn package manager
 - MongoDB
 
 ### Installation
+
 ```bash
 # Clone the repository
 git clone https://github.com/yourusername/ecommerce-api-v2.git
@@ -43,14 +45,13 @@ npm start
 ```
 
 ### Usage
-The API will be available at `http://localhost:3000/api/v2`
 
+The API will be available at `http://localhost:3000/api/v2`
 
 ## Technologies Used
 
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
-
 
 ## Author
 
