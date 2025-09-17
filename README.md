@@ -69,9 +69,9 @@ Set up a Postman Environment and a Collection to exercise the auth routes.
 
       ```json
       {
-      "name": "John Doe",
-      "email": "john@example.com",
-      "password": "Passw0rd!"
+        "name": "John Doe",
+        "email": "john@example.com",
+        "password": "Passw0rd!"
       }
       ```
 
@@ -84,8 +84,8 @@ Set up a Postman Environment and a Collection to exercise the auth routes.
     - Body (raw JSON):
       ```json
       {
-      "email": "john@example.com",
-      "password": "Passw0rd!"
+        "email": "john@example.com",
+        "password": "Passw0rd!"
       }
       ```
     - Tests (save JWT to env):

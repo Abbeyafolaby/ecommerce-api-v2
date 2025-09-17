@@ -4,6 +4,7 @@ import morgan from 'morgan';
 import helmet from 'helmet';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
+import cartRoutes from './routes/cartRoutes.js';
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get('/health', (req, res) => {
 // API v2 base path
 app.use('/api/v2/auth', authRoutes);
 app.use('/api/v2/products', productRoutes);
+app.use('/api/v2/cart', cartRoutes);
 
 // 404 handler
 app.use((req, res) => {
