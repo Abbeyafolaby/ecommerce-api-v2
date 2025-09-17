@@ -3,6 +3,7 @@ import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
 import authRoutes from './routes/authRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.get('/health', (req, res) => {
 
 // API v2 base path
 app.use('/api/v2/auth', authRoutes);
+app.use('/api/v2/products', productRoutes);
 
 // 404 handler
 app.use((req, res) => {

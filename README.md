@@ -66,23 +66,26 @@ Set up a Postman Environment and a Collection to exercise the auth routes.
     - URL: `{{baseUrl}}/api/{{apiVersion}}/auth/signup`
     - Headers: `Content-Type: application/json`
     - Body (raw JSON):
+
       ```
-      { 
-      "name": "John Doe", 
-      "email": "john@example.com", 
-      "password": "Passw0rd!" 
+      {
+      "name": "John Doe",
+      "email": "john@example.com",
+      "password": "Passw0rd!"
       }
       ```
+
       - Optional admin: add `"role": "admin"`.
+
   - Login
     - Method: POST
     - URL: `{{baseUrl}}/api/{{apiVersion}}/auth/login`
     - Headers: `Content-Type: application/json`
     - Body (raw JSON):
       ```
-      { 
-      "email": "john@example.com", 
-      "password": "Passw0rd!" 
+      {
+      "email": "john@example.com",
+      "password": "Passw0rd!"
       }
       ```
     - Tests (save JWT to env):
@@ -103,6 +106,7 @@ Set up a Postman Environment and a Collection to exercise the auth routes.
   - Me: 200 `{ user }`
 
 ### Common issues
+
 - Ensure your `.env` has a valid Mongo connection string:
   - `MONGODB_URI=mongodb://127.0.0.1:27017/ecommerce_api_v2`
   - Or use `MONGO_URI` if preferred.
