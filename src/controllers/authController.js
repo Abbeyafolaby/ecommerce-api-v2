@@ -5,7 +5,7 @@ import generateToken from '../utils/generateToken.js';
 // POST /auth/signup
 async function signup(req, res, next) {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, role } = req.body;
     if (!name || !email || !password) {
       return res.status(400).json({ message: 'Name, email, and password are required' });
     }
@@ -18,7 +18,17 @@ async function signup(req, res, next) {
     const salt = await bcrypt.genSalt(10);
     const passwordHash = await bcrypt.hash(password, salt);
 
-    const user = await User.create({ name, email, passwordHash });
+    // Normalize and validate role; default to 'user'
+    let normalizedRole = 'user';
+    if (typeof role === 'string') {
+      const r = role.toLowerCase();
+      if (r === 'admin') normalizedRole = 'admin';
+      else if (r !== 'user') {
+        return res.status(400).json({ message: "Role must be 'user' or 'admin'" });
+      }
+    }
+
+    const user = await User.create({ name, email, passwordHash, role: normalizedRole });
 
     const token = generateToken({ sub: user._id, role: user.role });
     return res.status(201).json({ user, token });
