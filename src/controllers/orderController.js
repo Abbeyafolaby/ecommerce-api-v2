@@ -143,3 +143,37 @@ export async function getOrder(req, res, next) {
     return next(err);
   }
 }
+
+// ADMIN: GET /admin/orders
+export async function listAllOrders(req, res, next) {
+  try {
+    const orders = await Order.find({}).sort({ createdAt: -1 });
+    return res.json({ orders });
+  } catch (err) {
+    return next(err);
+  }
+}
+
+// ADMIN: PATCH /admin/orders/:id/status
+export async function updateOrderFulfillmentStatus(req, res, next) {
+  try {
+    const { id } = req.params;
+    if (!mongoose.isValidObjectId(id)) {
+      return res.status(400).json({ message: 'Invalid order id' });
+    }
+    const { status } = req.body || {};
+    const allowed = ['pending', 'shipped', 'delivered'];
+    if (!allowed.includes(status)) {
+      return res.status(400).json({ message: `status must be one of: ${allowed.join(', ')}` });
+    }
+    const order = await Order.findByIdAndUpdate(
+      id,
+      { $set: { fulfillmentStatus: status } },
+      { new: true },
+    );
+    if (!order) return res.status(404).json({ message: 'Order not found' });
+    return res.json({ message: 'Order status updated', order });
+  } catch (err) {
+    return next(err);
+  }
+}

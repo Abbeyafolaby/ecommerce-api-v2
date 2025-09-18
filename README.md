@@ -216,6 +216,26 @@ All routes require authentication.
   - Headers: `Authorization: Bearer {{token}}`
   - Expected: 200 `{ order }`
 
+### Admin Orders
+
+Admin-only routes. Include `Authorization: Bearer {{token}}` for an admin user.
+
+- List all orders
+  - Method: GET
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/admin/orders`
+  - Expected: 200 `{ orders }`
+
+- Update order fulfillment status
+  - Method: PATCH
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/admin/orders/:id/status`
+  - Headers: `Content-Type: application/json`, `Authorization: Bearer {{token}}`
+  - Body (raw JSON):
+    ```json
+    { "status": "shipped" }
+    ```
+    Allowed values: `pending`, `shipped`, `delivered`
+  - Expected: 200 `{ message, order }`
+
 ### Common issues
 
 - Ensure your `.env` has a valid Mongo connection string:

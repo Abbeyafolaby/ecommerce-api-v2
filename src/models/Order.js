@@ -50,6 +50,12 @@ const orderSchema = new mongoose.Schema(
       default: 'pending',
       index: true,
     },
+    fulfillmentStatus: {
+      type: String,
+      enum: ['pending', 'shipped', 'delivered'],
+      default: 'pending',
+      index: true,
+    },
     payment: {
       status: { type: String, enum: ['pending', 'succeeded', 'failed'], default: 'pending' },
       reference: { type: String, default: '' },
