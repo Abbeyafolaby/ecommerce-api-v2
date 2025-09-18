@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
+import orderRoutes from './routes/orderRoutes.js';
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.get('/health', (req, res) => {
 app.use('/api/v2/auth', authRoutes);
 app.use('/api/v2/products', productRoutes);
 app.use('/api/v2/cart', cartRoutes);
+app.use('/api/v2/orders', orderRoutes);
 
 // 404 handler
 app.use((req, res) => {

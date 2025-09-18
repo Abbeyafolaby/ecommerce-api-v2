@@ -180,6 +180,42 @@ These routes require authentication. Ensure `{{token}}` is set by logging in.
   - Replace `:id` with the product id to remove from the cart.
   - Expected: 204 No Content
 
+### Orders Collection
+
+All routes require authentication.
+
+- Create order (from cart)
+  - Method: POST
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/orders/checkout`
+  - Headers: `Authorization: Bearer {{token}}`
+  - Body: none
+  - Expected: 201 `{ message, order }` with `order.status = "pending"`
+
+- Confirm payment (simulate ~80% success)
+  - Method: POST
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/orders/checkout`
+  - Headers: `Content-Type: application/json`, `Authorization: Bearer {{token}}`
+  - Body (raw JSON):
+    ```json
+    { "orderId": "<order_id>" }
+    ```
+  - Behavior:
+    - On success: decrements stock, clears cart, sets `order.status = "paid"`
+    - On failure: leaves stock/cart unchanged, sets `order.status = "failed"`
+  - Expected: 200 on success `{ message, order }`; 402 on failure
+
+- List my orders
+  - Method: GET
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/orders`
+  - Headers: `Authorization: Bearer {{token}}`
+  - Expected: 200 `{ orders }`
+
+- Get order by id
+  - Method: GET
+  - URL: `{{baseUrl}}/api/{{apiVersion}}/orders/:id`
+  - Headers: `Authorization: Bearer {{token}}`
+  - Expected: 200 `{ order }`
+
 ### Common issues
 
 - Ensure your `.env` has a valid Mongo connection string:
