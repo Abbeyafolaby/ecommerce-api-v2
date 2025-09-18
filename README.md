@@ -257,6 +257,20 @@ Admin-only routes. Include `Authorization: Bearer {{token}}` for an admin user.
 
 - **Node.js** - Runtime environment
 - **Express.js** - Web framework
+- **MongoDB & Mongoose** - Database and ODM
+- **JSON Web Tokens (jsonwebtoken)** - Authentication tokens
+- **Joi** - Request schema validation
+- **Helmet** - Secure HTTP headers
+- **CORS** - Cross-origin resource sharing
+- **express-rate-limit** - Brute-force/rate limiting
+- **Morgan** - HTTP request logging
+- **bcryptjs** - Password hashing
+
+Tooling
+
+- **Nodemon** - Development auto-reload
+- **ESLint** - Linting
+- **Prettier** - Code formatting
 
 ## Author
 
