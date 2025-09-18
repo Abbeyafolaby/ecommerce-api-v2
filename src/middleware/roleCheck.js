@@ -6,4 +6,3 @@ export default function roleCheck(req, res, next) {
   }
   return next();
 }
-

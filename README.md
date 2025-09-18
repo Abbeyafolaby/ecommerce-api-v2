@@ -13,6 +13,7 @@ A robust and scalable e-commerce backend API that provides complete functionalit
 - **Shopping Cart**: Persistent cart functionality with session management
 - **Order Processing**: Complete order lifecycle from creation to fulfillment
 - **Admin Panel**: Administrative endpoints for store management
+- **Validation & Security**: Joi validation, input sanitization, rate limiting, secure HTTP headers
 
 ## Installation & Usage
 
@@ -47,6 +48,15 @@ npm start
 ### Usage
 
 The API will be available at `http://localhost:3000/api/v2`
+
+### Security & Validation
+
+- Helmet is enabled globally for secure HTTP headers.
+- Request bodies are sanitized to remove dangerous keys and trim strings.
+- Auth endpoints are rate limited (20 requests / 15 minutes per IP).
+- Joi validation is applied to key inputs:
+  - Products: create and update bodies are validated.
+  - Cart: add-to-cart body is validated.
 
 ## Testing with Postman
 
@@ -122,7 +132,7 @@ Add these requests to the same Collection to test the Products CRUD. Admin-only 
   - Method: POST
   - URL: `{{baseUrl}}/api/{{apiVersion}}/products`
   - Headers: `Content-Type: application/json`, `Authorization: Bearer {{token}}`
-  - Body (raw JSON):
+  - Body (raw JSON) (validated by Joi):
     ```json
     {
       "name": "Sample Product",
@@ -140,7 +150,7 @@ Add these requests to the same Collection to test the Products CRUD. Admin-only 
   - Method: PATCH
   - URL: `{{baseUrl}}/api/{{apiVersion}}/products/:id`
   - Headers: `Content-Type: application/json`, `Authorization: Bearer {{token}}`
-  - Body (raw JSON): include only fields to change, e.g. `{ "price": 59.99, "stock": 30 }`
+  - Body (raw JSON) (validated by Joi): include only fields to change, e.g. `{ "price": 59.99, "stock": 30 }`
   - Expected: 200 `{ product }`
 
 - Delete product (admin only)
@@ -163,7 +173,7 @@ These routes require authentication. Ensure `{{token}}` is set by logging in.
   - Method: POST
   - URL: `{{baseUrl}}/api/{{apiVersion}}/cart/add`
   - Headers: `Content-Type: application/json`, `Authorization: Bearer {{token}}`
-  - Body (raw JSON):
+  - Body (raw JSON) (validated by Joi):
     ```json
     {
       "productId": "<product_id>",

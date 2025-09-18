@@ -2,6 +2,7 @@ import express, { json, urlencoded } from 'express';
 import cors from 'cors';
 import morgan from 'morgan';
 import helmet from 'helmet';
+import sanitize from './middleware/sanitize.js';
 import authRoutes from './routes/authRoutes.js';
 import productRoutes from './routes/productRoutes.js';
 import cartRoutes from './routes/cartRoutes.js';
@@ -15,6 +16,7 @@ app.use(helmet());
 app.use(cors());
 app.use(json());
 app.use(urlencoded({ extended: true }));
+app.use(sanitize());
 if (process.env.NODE_ENV !== 'test') {
   app.use(morgan('dev'));
 }

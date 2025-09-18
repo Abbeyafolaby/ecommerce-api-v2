@@ -12,4 +12,3 @@ router.get('/', listAllOrders);
 router.patch('/:id/status', updateOrderFulfillmentStatus);
 
 export default router;
-

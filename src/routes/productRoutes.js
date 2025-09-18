@@ -8,6 +8,7 @@ import {
 } from '../controllers/productController.js';
 import auth from '../middleware/auth.js';
 import requireAdmin from '../middleware/authorize.js';
+import { validateBody, createProductSchema, updateProductSchema } from '../utils/validators.js';
 
 const router = express.Router();
 
@@ -16,8 +17,8 @@ router.get('/', listProducts);
 router.get('/:id', getProduct);
 
 // Admin-only routes
-router.post('/', auth(true), requireAdmin, createProduct);
-router.patch('/:id', auth(true), requireAdmin, updateProduct);
+router.post('/', auth(true), requireAdmin, validateBody(createProductSchema), createProduct);
+router.patch('/:id', auth(true), requireAdmin, validateBody(updateProductSchema), updateProduct);
 router.delete('/:id', auth(true), requireAdmin, deleteProduct);
 
 export default router;
